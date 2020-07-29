@@ -14,12 +14,14 @@
 	<h1 class="text-center">Insert car here</h1>
 	<div class="container">
 		<form action="" method="post" th:action="@{/insert}" th:object="${Car}">
-		  	<input type="hidden" name="carId">
+		  	<input type="hidden" name="carID">
 		    <div class="form-group w-50 mx-auto d-block">
 		      <label for="inputManufacturer">Manufacturer</label>
-		      <select id="inputManufacturer" class="form-control">
+		      <select id="inputManufacturer" class="form-control" name="manufacturerID">
 		        <option selected>Choose...</option>
-		        <option>One</option>
+		        <option th:each="manufacturer:${ManufacturerList}" 
+		        		th:text="${manufacturer.manufacturerName}"
+		        		th:value="${manufacturer.manufacturerID}"></option>
 		      </select>
 		   	</div>
 		    <div class="form-group w-50 mx-auto d-block">
@@ -33,15 +35,15 @@
 		  
 			<div class="form-group w-50 mx-auto d-block">
 			   <label for="inputColor">Color</label>
-			   <input type="color" class="form-control" id="inputColor" placeholder="1234 Main St">
+			   <input type="text" class="form-control" id="inputColor" name="color">
 			</div>
 			<div class="form-group w-50 mx-auto d-block">
-			   <label for="inputAddress2">Price</label>
+			   <label for="inputPrice">Price</label>
 			   <div class="input-group mb-2 mr-sm-2">
 			   		<div class="input-group-prepend">
 		     			<div class="input-group-text">$</div>
 		   			</div>
-			   		<input type="Number" class="form-control" id="inputAddress2" placeholder="0.0">
+			   		<input type="number" class="form-control" id="inputPrice" name="price" placeholder="0.0">
 			   </div>
 			</div>
 		  	<button type="submit" class="btn btn-primary mx-auto d-block">Add Car</button>

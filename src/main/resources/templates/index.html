@@ -8,13 +8,34 @@
 <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-	<h1>Testing bootstrap</h1>
-	<div class="alert alert-primary" role="alert">
-  		A simple primary alert—check it out!
+	<div class="container">
+		<h1>Testing bootstrap</h1>
+		<p><a href="/insert" th:href="@{/insert}">insert</a></p>
+		<p><a href="/update" th:href="@{/update}">update</a></p>
+		<p><a href="/delete" th:href="@{/delete}">delete</a></p>
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">Car Id</th>
+		      <th scope="col">Manufacturer</th>
+		      <th scope="col">Year</th>
+		      <th scope="col">Model</th>
+		      <th scope="col">Color</th>
+		      <th scope="col">Price</th>
+		      <th scope="col">Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="car: ${CarList}">
+			    <td th:text="${car.carID}"></td>
+			    <td th:text="${car.manufacturerID}"></td>
+			    <td th:text="${car.year}"></td>
+			    <td th:text="${car.carModel}"></td>
+			    <td th:text="${car.color}"></td>
+			    <td th:text="${car.price}"></td>
+		    </tr>
+		  </tbody>
+		</table>
 	</div>
-	<p><a href="/insert" th:href="@{/insert}">insert</a></p>
-	<p><a href="/update" th:href="@{/update}">update</a></p>
-	<p><a href="/delete" th:href="@{/delete}">delete</a></p>
-		
 </body>
 </html>
