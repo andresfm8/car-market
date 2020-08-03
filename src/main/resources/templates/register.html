@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="htttps://www.thymeleaf.orf/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Register</title>
+<script src="../static/js/register.js" th:src="@{/js/register.js}"></script>
+</head>
+<body>
+	<h1>Create an Account</h1>
+	<div id="error" class="error"></div>
+	<form action="" th:action="@{/register}" method="post" name="form">
+		Username: <input type="text" name="username">
+		Password: <input type="password" name="password">
+		Confirm Password: <input type="password" name="confirmPassword">
+		<button>Submit</button>	
+	</form>
+</body>
+</html>

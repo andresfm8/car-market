@@ -1,3 +1,6 @@
+INSERT INTO sec_role (roleName) values ('ROLE_USER');
+INSERT INTO sec_role (roleName) values ('ROLE_ADMIN');
+
 INSERT INTO manufacturer (manufacturerName)
 	VALUES ('Nissan'),('Honda'),('Ford'),('Hyundai'),('Volkswagen'),('Chevrolet');
 
