@@ -13,7 +13,8 @@
 <body>
 	<h1 class="text-center mt-5">Add Car</h1>
 	<div class="container">
-		<form action="" method="post" th:action="@{/secure/insert}" th:object="${Car}" onSubmit="return validateYear(inputYear)">
+		<form action="" method="post" th:action="@{/secure/insert}" 
+			th:object="${Car}" onSubmit="return validateForm(inputCarModel, inputYear, inputColor)">
 		  	<input type="hidden" name="carID">
 		    <div class="form-group w-50 mx-auto d-block">
 		      <label for="inputManufacturer">Manufacturer</label>
@@ -53,9 +54,11 @@
 			   	</div>
 			</div>
 		  	<button type="submit" class="btn btn-primary mx-auto d-block">Submit</button>
+		  	
+		  	<div class="w-50 mx-auto mt-3">
+				<a href="/secure" th:href="@{/secure}" class="btn btn-outline-danger">Go back</a>
+			</div>
 		</form>
-		
-		<a href="/secure" th:href="@{/secure}">Go back</a>
 	</div>
 </body>
 </html>

@@ -9,14 +9,13 @@
 </head>
 <body>
 	<h1 class="text-center mt-5">Update Car</h1>
-	<p>Updating car with ID: <span th:text="${Car.carID}"></span> </p>
-	<form action="" th:action="@{/secure/update}" th:object="${Car}" method="post">
+	<p class="text-center">Updating car with ID: <span th:text="${Car.carID}"></span> </p>
+	<form action="" th:action="@{/secure/update}" onSubmit="return validateForm(inputCarModel)" 
+			th:object="${Car}" method="post">
 		<div class="form-group w-50 mx-auto d-block">
 			<input type="hidden" name="carID" th:field="*{carID}">
 			
-			<!-- Model:<input type="text" name="carModel" th:field="*{carModel}"><br>
-			Price:<input type="number" name="price" th:field="*{price}"> -->
-			
+
 			<div class="form-group w-50 mx-auto d-block">
 		      	<label for="inputModel">Model</label>
 		      	<input type="text" class="form-control" id="inputModel" th:field="*{carModel}"
@@ -34,10 +33,9 @@
 			   	</div>
 			</div>
 
-			<!-- add helpers below to explain what to do -->
 			<button class="btn btn-primary mx-auto d-block">Update</button>
 
-			<div class="w-50 mx-auto">
+			<div class="w-50 mx-auto mt-3">
 					<a href="/secure" th:href="@{/secure}" class="btn btn-outline-danger">Go back</a>
 			</div>
 		</div>

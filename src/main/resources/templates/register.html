@@ -12,7 +12,9 @@
 <body>
 	<h1 class="text-center mt-5">Create an Account</h1>
 	<div id="error" class="error"></div>
-	<form action="" th:action="@{/register}" method="post" name="form">
+	<form action="" th:action="@{/register}" 
+		 onSubmit="return validateForm(inputUsername, inputPassword, inputConfirmPassword)"
+		 method="post" name="form">
 		<div class="form-group w-50 mx-auto d-block">
 		
 			<div class="form-group w-50 mx-auto d-block">
@@ -33,7 +35,7 @@
 			
 			<button class="btn btn-primary mx-auto d-block">Submit</button>
 			
-			<div class="w-50 mx-auto">
+			<div class="w-50 mx-auto mt-3">
 				<a href="/" th:href="@{/}" class="btn btn-outline-danger">Go back</a>
 			</div>
 		</div>
