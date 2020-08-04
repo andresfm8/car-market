@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+		xmlns:sec="htttps://www.thymeleaf.orf/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
 <title>Car Now</title>
@@ -8,10 +9,49 @@
 <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <a class="navbar-brand" href="">Rent-A-Car</a>
+	
+	  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="/" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/secure" th:href="@{/secure}">Cars</a>
+	      </li>
+	    </ul>
+	    <div sec:authorize="isAnonymous()">
+	    <ul class="navbar-nav justify-content-end">
+			  <li class="nav-item">
+			    <a class="nav-link" href="/login" th:href="@{/login}">Login</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="/register" th:href="@{/register}">Sign Up</a>
+			  </li>
+	  	</ul>
+	  	</div>
+	  	<div sec:authorize="isAuthenticated()">
+	  		<ul class="navbar-nav justify-content-end">
+	  			<li class="nav-item">
+	  				<a class="nav-link disabled">Welcome, <span sec:authentication="name"></span></a>
+  				</li>
+	  			<li class="nav-item">
+	  				<a class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+  				</li>
+	  		</ul>
+	  	</div>
+	  </div>  
+	</nav>
+	
 	<div class="container">
-		<h1>Testing bootstrap</h1>
-		<p><a href="../insert" th:href="@{/secure/insert}">insert</a></p>
-		<p><a href="/delete" th:href="@{/delete}">delete</a></p>
+		<h1>Listed Cars</h1>
+		<a href="/insert" th:href="@{/secure/insert}">Add Car</a>
+		<a href="/delete" th:href="@{/secure/delete}">Delete Car</a>
 		<table class="table">
 		  <thead>
 		    <tr>
@@ -27,12 +67,14 @@
 		  <tbody>
 		    <tr th:each="car: ${CarList}">
 			    <td th:text="${car.carID}"></td>
-			    <td th:text="${car.manufacturerID}"></td>
+			    <td th:each="man: ${ManList}" 
+			    	th:if="${man.manufacturerID == car.manufacturerID}" 
+			    	th:text="${man.manufacturerName}"></td>
 			    <td th:text="${car.year}"></td>
 			    <td th:text="${car.carModel}"></td>
 			    <td th:text="${car.color}"></td>
 			    <td th:text="${car.price}"></td>
-			    <td><a href="/update" th:href="@{/update/} + ${car.carID}">Update</a></td>
+			    <td><a href="/update" th:href="@{/secure/update/} + ${car.carID}">Update</a></td>
 		    </tr>
 		  </tbody>
 		</table>

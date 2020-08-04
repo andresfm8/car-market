@@ -28,7 +28,13 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String getIndex(Model model) {
-//		model.addAttribute("CarList", da.getCars());
+		//Create an admin since users shouldnt be able to create admins
+		//If you restart the server and dont reload the home page, and admin wont exist
+		if(da.findUserAccount("adm") == null) {
+			da.addUser("adm", "adm3");
+			da.addRole(da.findUserAccount("adm").getUserID(), Long.valueOf(1));
+			da.addRole(da.findUserAccount("adm").getUserID(), Long.valueOf(2));
+		}
 		return "index";
 	}
 	
@@ -48,7 +54,7 @@ public class HomeController {
 		da.addUser(username, password);
 		Long userID = da.findUserAccount(username).getUserID();
 		da.addRole(userID, Long.valueOf(1));
-		return "redirect:/secure";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/secure")
@@ -59,8 +65,9 @@ public class HomeController {
 		for(GrantedAuthority ga: authentication.getAuthorities()) {
 			roles.add(ga.getAuthority());
 		}
+		model.addAttribute("ManList", da.getManufacturers());
 		model.addAttribute("CarList", da.getCars());
-		model.addAttribute("username", username);
+//		model.addAttribute("username", username);
 		return "secure/index";
 	}
 	
@@ -72,7 +79,7 @@ public class HomeController {
 		return "secure/insert";
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/secure/insert")
 	public String postInsert(Model model,
 							@RequestParam Long manufacturerID,
 							@RequestParam String carModel,
@@ -80,40 +87,43 @@ public class HomeController {
 							@RequestParam int year,
 							@RequestParam double price) {
 		da.addCar(manufacturerID, carModel, year, color, price);
+		model.addAttribute("ManList", da.getManufacturers());
 		model.addAttribute("CarList", da.getCars());
-		return "index";
+		return "secure/index";
 	}
 	//Get form to update an specific car by ID
-	@GetMapping("/update/{carID}")
+	@GetMapping("/secure/update/{carID}")
 	public String getUpdate(Model model, @PathVariable Long carID) {
 		//Create an instance of a car and assign the car that is being updated
 		Car car = da.getCarById(carID).get(0);
 		model.addAttribute("Car", car);
-		return "update";
+		return "secure/update";
 	}
 	
-	@PostMapping("/update")
+	@PostMapping("/secure/update")
 	public String postUpdate(Model model, 
 			@ModelAttribute Car car) {
 		
 		da.updateCar(car);
+		model.addAttribute("ManList", da.getManufacturers());
 		model.addAttribute("CarList", da.getCars());		
-		return "index";
+		return "secure/index";
 	}
 	//Render delete form and get all cars
-	@GetMapping("/delete")
+	@GetMapping("/secure/delete")
 	public String getDelete(Model model) {
 		
 		model.addAttribute("CarList", da.getCars());
-		return "delete";
+		return "secure/delete";
 	}
 	//Delete the car based on the user selection
-	@PostMapping("/delete")
+	@PostMapping("/secure/delete")
 	public String postDelete(Model model,
 			@ModelAttribute Car car) {
 		da.deleteCar(car.getCarID());
+		model.addAttribute("ManList", da.getManufacturers());
 		model.addAttribute("CarList", da.getCars());
-		return "index";
+		return "secure/index";
 	}
 	
 	@GetMapping("/permission-denied")

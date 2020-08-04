@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/", "/js/**", "/css/**", "/images/**", "/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated()
-				.and().formLogin().loginPage("/login").permitAll()
+				.and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/secure")
 				.and().logout().invalidateHttpSession(true)
 					.clearAuthentication(true)
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -53,12 +53,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
-	//This method is to add an admin user, since admins cant be created from the website
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
-			.withUser("theadmin").password("adm123").roles("ADMIN", "USER");
-	}
-
-
 }

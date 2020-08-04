@@ -11,9 +11,9 @@
 <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
-	<h1 class="text-center">Insert car here</h1>
+	<h1 class="text-center mt-5">Add Car</h1>
 	<div class="container">
-		<form action="" method="post" th:action="@{/insert}" th:object="${Car}" onSubmit="return validateYear(inputYear)">
+		<form action="" method="post" th:action="@{/secure/insert}" th:object="${Car}" onSubmit="return validateYear(inputYear)">
 		  	<input type="hidden" name="carID">
 		    <div class="form-group w-50 mx-auto d-block">
 		      <label for="inputManufacturer">Manufacturer</label>
@@ -52,8 +52,10 @@
 			   				min="0" max="99999" required>
 			   	</div>
 			</div>
-		  	<button type="submit" class="btn btn-primary mx-auto d-block">Add Car</button>
+		  	<button type="submit" class="btn btn-primary mx-auto d-block">Submit</button>
 		</form>
+		
+		<a href="/secure" th:href="@{/secure}">Go back</a>
 	</div>
 </body>
 </html>
